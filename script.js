@@ -1,90 +1,127 @@
-const one = document.getElementById('one');
-const two = document.getElementById('two');
-const three = document.getElementById('three');
-const four = document.getElementById('four');
-const five = document.getElementById('five');
-const six = document.getElementById('six');
-const seven = document.getElementById('seven');
-const eight = document.getElementById('eight');
-const nine = document.getElementById('nine');
-const resetBtn = document.getElementById('resetBtn');
+'use strict';
 
-one.addEventListener('click', turn);
-two.addEventListener('click', turn);
-three.addEventListener('click', turn);
-four.addEventListener('click', turn);
-five.addEventListener('click', turn);
-six.addEventListener('click', turn);
-seven.addEventListener('click', turn);
-eight.addEventListener('click', turn);
-nine.addEventListener('click', turn);
-resetBtn.addEventListener('click', reset);
-
-//Rule: 
-//-if you only need one (ex: gameBoard) use module
-//-if you need multiples (ex: players) create them with factories
-
-function reset() {
-  one.textContent = "";
-  two.textContent = "";
-  three.textContent = "";
-  four.textContent = "";
-  five.textContent = "";
-  six.textContent = "";
-  seven.textContent = "";
-  eight.textContent = "";
-  nine.textContent = "";
-};
-
-function turn(e) {
-  if (e.target.innerText === "") {
-    switch (e.target.id) {
-      case 'one':  
-      one.textContent = "1";
-        break;
-      case 'two':
-        two.textContent = "2";
-        break;
-      case 'three':
-        three.textContent = "3";
-        break;
-      case 'four':
-        four.textContent = "4";
-        break;
-      case 'five':
-        five.textContent = "5";
-        break;
-      case 'six':
-        six.textContent = "6";
-        break;
-      case 'seven':
-        seven.textContent = "7";
-        break;
-      case 'eight':
-        eight.textContent = "8";
-        break;
-      case 'nine':
-        nine.textContent = "9";
-        break;
-    } 
-  } 
+//FACTORY FUNCTION
+const createPlayer = (name, symbol) => {
+  return { name, symbol };
 };
 
 //MODULE FUNCTIONS
+//1. Gameboard Module
 const Gameboard = (function() {
-  'use strict';
 
-  const gameboard = [];
+  const cells = document.querySelectorAll('.cell');
+
+  const gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+  const renderGameBoard = function() {
+    for (let i = 0; i < gameBoard.length; i++) {
+    cells[i].textContent = gameBoard[i];
+    }
+  };
+
+  return { gameBoard, renderGameBoard, cells };
 
 })();
 
+//2. Gameplay Module
 const Gameplay = (function() {
-  'use strict';
+
+  let roundCounter = 1;
+  const playerX = createPlayer('Player One', 'X');
+  const playerO = createPlayer('Player Two', 'O');
+  const startBtn = document.getElementById('startBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const addEvents = () => {
+    if (roundCounter === 1) {
+      Gameboard.cells.forEach((cell) => {
+        cell.addEventListener('click', turn);
+      })
+    }
+  };
+
+  const resetGame = () => {
+    roundCounter = 1;
+    for (let i = 0; i < Gameboard.gameBoard.length; i++) {
+      if (Gameboard.gameBoard[i].textContent !== "") {
+        Gameboard.gameBoard[i] = "";
+      }
+    }
+    Gameboard.renderGameBoard();
+  };
+
+  const removeEvents = () => {
+    Gameboard.cells.forEach((cell) => {
+        cell.removeEventListener('click', turn);
+    });
+  }
+
+  startBtn.addEventListener('click', addEvents);
+  resetBtn.addEventListener('click', resetGame);
+
+  const turn = (e) => {
+    if (e.target.innerText === "") {
+      if (roundCounter % 2 === 0) {
+        Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerO.symbol;
+        roundCounter += 1;
+        Gameboard.renderGameBoard();
+        winner();
+      } else {
+        Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerX.symbol;
+        Gameboard.renderGameBoard();
+        roundCounter += 1;
+        winner();
+      }
+    } 
+  };
+
+  const winner = () => {
+    if (Gameboard.gameBoard[0] === Gameboard.gameBoard[1] &&
+      Gameboard.gameBoard[0] === Gameboard.gameBoard[2] && 
+      Gameboard.gameBoard[0] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[3] === Gameboard.gameBoard[4] &&
+      Gameboard.gameBoard[3] === Gameboard.gameBoard[5] && 
+      Gameboard.gameBoard[3] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[6] === Gameboard.gameBoard[7] &&
+      Gameboard.gameBoard[6] === Gameboard.gameBoard[8] && 
+      Gameboard.gameBoard[6] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[3] &&
+      Gameboard.gameBoard[0] === Gameboard.gameBoard[6] && 
+      Gameboard.gameBoard[0] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[1] === Gameboard.gameBoard[4] &&
+      Gameboard.gameBoard[1] === Gameboard.gameBoard[7] && 
+      Gameboard.gameBoard[1] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[5] &&
+      Gameboard.gameBoard[2] === Gameboard.gameBoard[8] && 
+      Gameboard.gameBoard[2] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[4] &&
+      Gameboard.gameBoard[0] === Gameboard.gameBoard[8] && 
+      Gameboard.gameBoard[0] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[4] &&
+      Gameboard.gameBoard[2] === Gameboard.gameBoard[6] && 
+      Gameboard.gameBoard[2] !== "") {
+      console.log("Winner");
+      removeEvents();
+    } else if (roundCounter === 10) {
+      console.log("Tie");
+      removeEvents();
+    }
+  };
+
+  return { }; //anything?
 
 })();
-
-//FACTORY FUNCTIONS
-const Player = () => {
-  const sayHello = () => console.log('hello!');
-  return { sayHello };
-};
