@@ -34,11 +34,14 @@ const Gameplay = (function() {
   const submitBtn = document.getElementById('submitBtn');
 
   const addEvents = (e) => {
-    e.preventDefault();
-    modal.style.display = "none";
-    document.getElementById("addPlayers").reset();
-    console.log("SUBMIT");
-    if (roundCounter === 1) {
+    if (modal.style.display === "block" && roundCounter === 1) {
+      e.preventDefault();
+      modal.style.display = "none";
+      document.getElementById("addPlayers").reset();
+      Gameboard.cells.forEach((cell) => {
+        cell.addEventListener('click', turn);
+      })
+    } else if (modal.style.display === "none" && roundCounter === 1) {
       Gameboard.cells.forEach((cell) => {
         cell.addEventListener('click', turn);
       })
@@ -141,3 +144,9 @@ const Gameplay = (function() {
   
   return { }; //anything?
 })();
+
+
+// TO DO:
+// 1. Add form player creation
+// 2. Remove play button and instructions upon form submission
+// 3. And add player names and winner text

@@ -43,7 +43,6 @@ header {
   font-size: 3rem;
 }
 
-/* is this the best solution here? */
 #one {
   border-top: var(--border);
   border-left: var(--border);
