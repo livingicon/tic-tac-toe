@@ -36,6 +36,7 @@ const Gameplay = (function() {
   const addEvents = (e) => {
     e.preventDefault();
     modal.style.display = "none";
+    document.getElementById("addPlayers").reset();
     console.log("SUBMIT");
     if (roundCounter === 1) {
       Gameboard.cells.forEach((cell) => {
@@ -67,12 +68,13 @@ const Gameplay = (function() {
 
   const closeModal = () => { //SET THIS UP
     modal.style.display = "none";
+    document.getElementById("addPlayers").reset();
   }
 
   startBtn.addEventListener('click', openModal); //make a new one for the submit form button
   resetBtn.addEventListener('click', resetGame);
   submitBtn.addEventListener('click', addEvents);
-  closeBtn
+  closeBtn.addEventListener('click', closeModal);
 
   const turn = (e) => {
     if (e.target.innerText === "") {
