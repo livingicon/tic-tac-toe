@@ -31,8 +31,12 @@ const Gameplay = (function() {
   const playerO = createPlayer('Player Two', 'O');
   const startBtn = document.getElementById('startBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const submitBtn = document.getElementById('submitBtn');
 
-  const addEvents = () => {
+  const addEvents = (e) => {
+    e.preventDefault();
+    modal.style.display = "none";
+    console.log("SUBMIT");
     if (roundCounter === 1) {
       Gameboard.cells.forEach((cell) => {
         cell.addEventListener('click', turn);
@@ -57,8 +61,18 @@ const Gameplay = (function() {
     });
   }
 
-  startBtn.addEventListener('click', addEvents);
+  const openModal = () => {
+    modal.style.display = "block";
+  };
+
+  const closeModal = () => { //SET THIS UP
+    modal.style.display = "none";
+  }
+
+  startBtn.addEventListener('click', openModal); //make a new one for the submit form button
   resetBtn.addEventListener('click', resetGame);
+  submitBtn.addEventListener('click', addEvents);
+  closeBtn
 
   const turn = (e) => {
     if (e.target.innerText === "") {
@@ -122,7 +136,6 @@ const Gameplay = (function() {
       removeEvents();
     }
   };
-
+  
   return { }; //anything?
-
 })();
