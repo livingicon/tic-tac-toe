@@ -87,6 +87,7 @@ const Gameplay = (function() {
       document.getElementById("playerTwo").defaultValue = playerO.name;
       const play = document.getElementById("play");
       instructions.textContent = `${playerX.name}'s Turn`;
+      instructions.style.fontSize = "3rem"; //HERE!
       const playBtn = document.getElementById("playBtn");
       playBtn.style.display = "none";
       Gameboard.renderGameBoard();
@@ -116,42 +117,42 @@ const Gameplay = (function() {
     if (Gameboard.gameBoard[0] === Gameboard.gameBoard[1] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[2] && 
       Gameboard.gameBoard[0] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[3] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[3] === Gameboard.gameBoard[5] && 
       Gameboard.gameBoard[3] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[6] === Gameboard.gameBoard[7] &&
       Gameboard.gameBoard[6] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[6] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[3] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[0] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[1] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[1] === Gameboard.gameBoard[7] && 
       Gameboard.gameBoard[1] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[5] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[2] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[0] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[2] !== "") {
-      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
+      instructions.textContent = `${playerX.name || playerO.name} is the winner!`;
       removeEvents();
     } else if (roundCounter === 10) {
       instructions.textContent = "Tie!";

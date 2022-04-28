@@ -15,10 +15,23 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  font-size: 2rem;
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#instructions {
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+#play {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,6 +100,20 @@ header {
   background-color: red;
 }
 
+#submitBtn {
+  background-color: green
+}
+
+button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 100px;
+  font-size: 1.3rem;
+  margin: 10px;
+}
+
 #modal {
   display: none;
   position: fixed; 
@@ -95,9 +122,9 @@ header {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.8); 
 }
 
 #addPlayers {
