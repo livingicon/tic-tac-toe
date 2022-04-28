@@ -1,6 +1,21 @@
+:root {
+  --border: 3px solid white;
+}
+
 body {
+  margin: 0;
+  padding: 0;
   font-size: 1rem;
   background-color:rgb(94, 94, 94);
+}
+
+header {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .main {
@@ -10,7 +25,7 @@ body {
   align-items: center;
 }
 
-.gameboard {
+.gameBoard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 318px;
@@ -30,6 +45,41 @@ body {
 
 /* is this the best solution here? */
 #one {
-  border-top: 3px solid white;
-  border-left: 3px solid white;
+  border-top: var(--border);
+  border-left: var(--border);
+}
+
+#two {
+  border-top: var(--border);
+}
+
+#three {
+  border-top: var(--border);
+  border-right: var(--border);
+}
+
+#four {
+  border-left: var(--border);
+}
+
+#six {
+  border-right: var(--border);
+}
+
+#seven {
+  border-left: var(--border);
+  border-bottom: var(--border);
+}
+
+#eight {
+  border-bottom: var(--border);
+}
+
+#nine {
+  border-right: var(--border);
+  border-bottom: var(--border);
+}
+
+#startBtn {
+  background-color: green;
 }
