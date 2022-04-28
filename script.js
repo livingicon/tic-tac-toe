@@ -33,7 +33,8 @@ const Gameplay = (function() {
   const resetBtn = document.getElementById('resetBtn');
   const submitBtn = document.getElementById('submitBtn');
 
-  const addEvents = (e) => {
+  const addEvents = (e) => { //BREAK THIS DOWN (Doing too many things)
+    console.log(e.target);
     if (modal.style.display === "block" && roundCounter === 1) {
       e.preventDefault();
       modal.style.display = "none";
@@ -45,7 +46,7 @@ const Gameplay = (function() {
       Gameboard.cells.forEach((cell) => {
         cell.addEventListener('click', turn);
       })
-    }
+    } 
   };
 
   const resetGame = () => {
@@ -148,5 +149,7 @@ const Gameplay = (function() {
 
 // TO DO:
 // 1. Add form player creation
+const playerOne = document.getElementById("playerOne").value; //not working
+console.log(document.getElementById("playerOne").value);  //not working
 // 2. Remove play button and instructions upon form submission
 // 3. And add player names and winner text
