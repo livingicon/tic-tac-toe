@@ -79,7 +79,7 @@ header {
   border-bottom: var(--border);
 }
 
-#startBtn {
+#playBtn {
   background-color: green;
 }
 

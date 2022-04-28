@@ -54,7 +54,6 @@ const Gameplay = (function() {
 
   const chooseOption = (e) => {
     e.preventDefault();
-    console.log(roundCounter);
     if (roundCounter > 1) {
       resetGame(e);
     } else {
@@ -76,8 +75,6 @@ const Gameplay = (function() {
 
   const turn = (e) => {
     e.preventDefault();
-
-    //must have logic to reset board if need be (reset game rewritten)
     const playerOneName = document.getElementById("playerOne").value;
     const playerTwoName = document.getElementById("playerTwo").value;
     if (!playerOneName || !playerTwoName) {
@@ -89,20 +86,24 @@ const Gameplay = (function() {
       document.getElementById("playerOne").defaultValue = playerX.name;
       document.getElementById("playerTwo").defaultValue = playerO.name;
       const play = document.getElementById("play");
-      play.style.display = "none";
-      
+      instructions.textContent = `${playerX.name}'s Turn`;
+      const playBtn = document.getElementById("playBtn");
+      playBtn.style.display = "none";
+      Gameboard.renderGameBoard();
       closeModal()
       addEvents();
       if (e.target.innerText === "") {
         if (roundCounter % 2 === 0) {
           Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerO.symbol;
-          console.log(`${playerO.name}'s turn`);
+          const instructions = document.getElementById("instructions");
+          instructions.textContent = `${playerX.name}'s Turn`;
           roundCounter += 1;
           Gameboard.renderGameBoard();
           winner(playerO);
         } else {
           Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerX.symbol;
-          console.log(`${playerX.name}'s turn`);
+          const instructions = document.getElementById("instructions");
+          instructions.textContent = `${playerO.name}'s Turn`;
           Gameboard.renderGameBoard();
           roundCounter += 1;
           winner(playerX);
@@ -115,58 +116,53 @@ const Gameplay = (function() {
     if (Gameboard.gameBoard[0] === Gameboard.gameBoard[1] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[2] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[3] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[3] === Gameboard.gameBoard[5] && 
       Gameboard.gameBoard[3] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[6] === Gameboard.gameBoard[7] &&
       Gameboard.gameBoard[6] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[6] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[3] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[1] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[1] === Gameboard.gameBoard[7] && 
       Gameboard.gameBoard[1] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[5] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[2] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[2] !== "") {
-      console.log(`${playerX.name || playerO.name} is the winner`);
+      instructions.textContent = `${playerX.name || playerO.name} is the winner`;
       removeEvents();
     } else if (roundCounter === 10) {
-      console.log("Tie");
+      instructions.textContent = "Tie!";
       removeEvents();
     }
   };
 
   // event listeners
-  startBtn.addEventListener('click', openModal);
+  playBtn.addEventListener('click', openModal);
   resetBtn.addEventListener('click', openModal);
-  submitBtn.addEventListener('click', chooseOption); //must be turn (not resetGame)
-  closeBtn.addEventListener('click', closeModal);
+  submitBtn.addEventListener('click', chooseOption);
 
 // end Gameplay Module
 })();
-
-
-// TO DO:
-// 3. And add player names and winner text
