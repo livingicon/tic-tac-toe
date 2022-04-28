@@ -8,9 +8,7 @@ const createPlayer = (name, symbol) => {
 //MODULE FUNCTIONS
 //1. Gameboard Module
 const Gameboard = (function() {
-
   const cells = document.querySelectorAll('.cell');
-
   const gameBoard = ["", "", "", "", "", "", "", "", ""];
 
   const renderGameBoard = function() {
@@ -20,44 +18,23 @@ const Gameboard = (function() {
   };
 
   return { gameBoard, renderGameBoard, cells };
-
 })();
 
 //2. Gameplay Module
 const Gameplay = (function() {
 
+  // Variables
   let roundCounter = 1;
-  const playerX = createPlayer('Player One', 'X');
-  const playerO = createPlayer('Player Two', 'O');
   const startBtn = document.getElementById('startBtn');
   const resetBtn = document.getElementById('resetBtn');
   const submitBtn = document.getElementById('submitBtn');
 
-  const addEvents = (e) => { //BREAK THIS DOWN (Doing too many things)
-    console.log(e.target);
-    if (modal.style.display === "block" && roundCounter === 1) {
-      e.preventDefault();
-      modal.style.display = "none";
-      document.getElementById("addPlayers").reset();
-      Gameboard.cells.forEach((cell) => {
-        cell.addEventListener('click', turn);
-      })
-    } else if (modal.style.display === "none" && roundCounter === 1) {
-      Gameboard.cells.forEach((cell) => {
-        cell.addEventListener('click', turn);
-      })
-    } 
-  };
-
-  const resetGame = () => {
-    roundCounter = 1;
-    for (let i = 0; i < Gameboard.gameBoard.length; i++) {
-      if (Gameboard.gameBoard[i].textContent !== "") {
-        Gameboard.gameBoard[i] = "";
-      }
-    }
-    Gameboard.renderGameBoard();
-    addEvents();
+  // Methods
+  const addEvents = () => { 
+    //change?
+    Gameboard.cells.forEach((cell) => {
+      cell.addEventListener('click', turn);
+    })
   };
 
   const removeEvents = () => {
@@ -70,86 +47,126 @@ const Gameplay = (function() {
     modal.style.display = "block";
   };
 
-  const closeModal = () => { //SET THIS UP
+  const closeModal = () => { 
     modal.style.display = "none";
     document.getElementById("addPlayers").reset();
   }
 
-  startBtn.addEventListener('click', openModal); //make a new one for the submit form button
-  resetBtn.addEventListener('click', resetGame);
-  submitBtn.addEventListener('click', addEvents);
-  closeBtn.addEventListener('click', closeModal);
-
-  const turn = (e) => {
-    if (e.target.innerText === "") {
-      if (roundCounter % 2 === 0) {
-        Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerO.symbol;
-        roundCounter += 1;
-        Gameboard.renderGameBoard();
-        winner();
-      } else {
-        Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerX.symbol;
-        Gameboard.renderGameBoard();
-        roundCounter += 1;
-        winner();
-      }
-    } 
+  const chooseOption = (e) => {
+    e.preventDefault();
+    console.log(roundCounter);
+    if (roundCounter > 1) {
+      resetGame(e);
+    } else {
+      e.preventDefault();
+      turn(e);
+    }
   };
 
-  const winner = () => {
+  const resetGame = (e) => {
+    roundCounter = 1;
+    for (let i = 0; i < Gameboard.gameBoard.length; i++) {
+      if (Gameboard.gameBoard[i].textContent !== "") {
+        Gameboard.gameBoard[i] = "";
+      }
+    }
+    Gameboard.renderGameBoard();
+    turn(e)
+  };
+
+  const turn = (e) => {
+    e.preventDefault();
+
+    //must have logic to reset board if need be (reset game rewritten)
+    const playerOneName = document.getElementById("playerOne").value;
+    const playerTwoName = document.getElementById("playerTwo").value;
+    if (!playerOneName || !playerTwoName) {
+      alert("Both player names are required to play a game.")
+      return false;
+    } else {
+      const playerX = createPlayer(playerOneName, 'X');
+      const playerO = createPlayer(playerTwoName, 'O');
+      document.getElementById("playerOne").defaultValue = playerX.name;
+      document.getElementById("playerTwo").defaultValue = playerO.name;
+      const play = document.getElementById("play");
+      play.style.display = "none";
+      
+      closeModal()
+      addEvents();
+      if (e.target.innerText === "") {
+        if (roundCounter % 2 === 0) {
+          Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerO.symbol;
+          console.log(`${playerO.name}'s turn`);
+          roundCounter += 1;
+          Gameboard.renderGameBoard();
+          winner(playerO);
+        } else {
+          Gameboard.gameBoard[e.target.getAttribute("data-value")] = playerX.symbol;
+          console.log(`${playerX.name}'s turn`);
+          Gameboard.renderGameBoard();
+          roundCounter += 1;
+          winner(playerX);
+        }
+      } 
+    }
+  };
+
+  const winner = (playerX, playerO) => {
     if (Gameboard.gameBoard[0] === Gameboard.gameBoard[1] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[2] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[3] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[3] === Gameboard.gameBoard[5] && 
       Gameboard.gameBoard[3] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[6] === Gameboard.gameBoard[7] &&
       Gameboard.gameBoard[6] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[6] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[3] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[1] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[1] === Gameboard.gameBoard[7] && 
       Gameboard.gameBoard[1] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[5] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[2] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[0] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[0] === Gameboard.gameBoard[8] && 
       Gameboard.gameBoard[0] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (Gameboard.gameBoard[2] === Gameboard.gameBoard[4] &&
       Gameboard.gameBoard[2] === Gameboard.gameBoard[6] && 
       Gameboard.gameBoard[2] !== "") {
-      console.log("Winner");
+      console.log(`${playerX.name || playerO.name} is the winner`);
       removeEvents();
     } else if (roundCounter === 10) {
       console.log("Tie");
       removeEvents();
     }
   };
-  
-  return { }; //anything?
+
+  // event listeners
+  startBtn.addEventListener('click', openModal);
+  resetBtn.addEventListener('click', openModal);
+  submitBtn.addEventListener('click', chooseOption); //must be turn (not resetGame)
+  closeBtn.addEventListener('click', closeModal);
+
+// end Gameplay Module
 })();
 
 
 // TO DO:
-// 1. Add form player creation
-const playerOne = document.getElementById("playerOne").value; //not working
-console.log(document.getElementById("playerOne").value);  //not working
-// 2. Remove play button and instructions upon form submission
 // 3. And add player names and winner text
