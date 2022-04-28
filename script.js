@@ -48,6 +48,7 @@ const Gameplay = (function() {
       }
     }
     Gameboard.renderGameBoard();
+    addEvents();
   };
 
   const removeEvents = () => {
