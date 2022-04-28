@@ -1,1 +1,1 @@
-# tic-tac-toe
+This tic-tac-toe game is a project in the Odin Project curriculum meant to be a practic ground for Module functions and Factory functions. The goal is to write safer code than when using constructor functions and to keep as much code as possible out of the global scope. 
