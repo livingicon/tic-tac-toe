@@ -14,10 +14,12 @@
     <h1 class="gameName">Tic-Tac-Toe</h1>
   </header>
   <main class="main">
-    <div class="instructions">Click the "PLAY" button to enter player names 
-      and begin.</div>
-    <div class="button">
-      <button id="startBtn">PLAY</button>
+    <div id="play">
+      <p id="instructions">Click the "PLAY" button to enter player names 
+        and begin.</p>
+      <div class="button">
+        <button id="startBtn">PLAY</button>
+      </div>
     </div>
     <div class="gameBoard">
       <div class="cell " id="one" data-value="0"></div>
@@ -39,12 +41,13 @@
       <div class="players">
         <label for="playerOne">Player One Name</label>
         <input type="text" id="playerOne"
-        maxlength="100" default="Player X">
+        maxlength="100">
+        <!-- value="Player One" -->
       </div>
       <div class="players">
         <label for="playerTwo">Player Two Name</label>
         <input type="text" id="playerTwo"
-        maxlength="100" default="Player O">
+        maxlength="100">
       </div>
       <div class="buttons">
         <button id="submitBtn" type="submit">SUBMIT</button>
