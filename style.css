@@ -98,5 +98,17 @@ header {
   height: 100%;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+#addPlayers {
+  background-color: #fefefe;
+  margin: 30% auto;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px solid #888;
+  width: 40%;
+  min-width: 185px;
+  display: grid;
+  gap: 10px;
 }
